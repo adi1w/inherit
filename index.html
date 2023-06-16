@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INHERIT ND PROTOTYPE</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+<br>
+<br>
+    <h1 class="top">INHERITANCE AND PROTOTYPE </h1>
+
+
+<h4>
+    Q1.  
+    Create 2 objects - parent and child. Attach methods to parent and use those methods in child object using parents prototype 
+</h4>
+
+<p>
+    // Parent object constructor
+function Parent() {}<br>
+
+// Method attached to the parent object <br>
+Parent.prototype.parentMethod = function() {
+  console.log("This is a method defined in the parent object."); <br>
+};
+
+// Child object constructor
+function Child() {}<br>
+
+// Inheriting from the parent object
+Child.prototype = Object.create(Parent.prototype);<br>
+
+// Creating an instance of the child object
+var childObject = new Child();<br>
+
+// Using the method from the parent object through the child object
+childObject.parentMethod(); // Output: "This is a method defined in the parent object."<br>
+
+</p>
+
+
+<h3>
+    ANS1.
+    <br>
+    This is a method defined in the parent object.
+
+</h3>
+
+
+<br>
+<br>
+<hr>
+
+<h4>Q2. 
+
+</h4>
+
+
+<p>
+    // Parent object constructor
+function Parent() {  <br>
+  this.parentProperty = "Parent Property";      <br>
+}
+
+// Method attached to the parent object
+Parent.prototype.parentMethod = function() {       <br>
+  console.log("This is a method defined in the parent object.");   <br>
+};
+
+// Child object constructor       <br>
+function Child() {
+  this.childProperty = "Child Property";   <br>
+}
+
+// Inheriting from the parent object   <br>
+Child.prototype = Object.create(Parent.prototype);      <br>
+Child.prototype.constructor = Child;                <br>
+
+// Method attached to the child object       <br>
+Child.prototype.childMethod = function() {       <br>
+  console.log("This is a method defined in the child object.");               <br>
+};
+
+// Creating an instance of the child object        <br>
+var childObject = new Child();            <br>
+
+// Accessing properties and methods using the prototype chain       <br>
+console.log(childObject.childProperty);                 <br>
+console.log(childObject.parentProperty);            <br>
+childObject.childMethod();                           <br>
+childObject.parentMethod(); <br>
+
+</p>
+
+
+<h3>
+    ANS2.  
+    <br>
+    Child Property   <br>
+undefined  <br>
+This is a method defined in the child object.<br>
+This is a method defined in the parent object. <br>
+
+</h3>
+<br>
+<hr>
+  
+<h4>Q3. 
+    Add a method to calculate sum of all elements in Array in array's protype, use that method to calculate sum for multiple arrays.
+</h4>
+
+<p>
+    // Adding a method to the Array prototype   <br>
+Array.prototype.calculateSum = function() {   <br>
+    var sum = 0;
+    for (var i = 0; i < this.length; i++) {    <br>
+      sum += this[i];      <br>
+    }
+    return sum;          <br>
+  };
+  
+  // Creating multiple arrays
+  var array1 = [1, 2, 3, 4, 5];    <br>
+  var array2 = [10, 20, 30];       <br>
+  var array3 = [2, 4, 6, 8, 10, 12];      <br>
+  
+  // Calculating the sum using the method from the Array prototype
+  var sum1 = array1.calculateSum();       <br>
+  var sum2 = array2.calculateSum();          <br>
+  var sum3 = array3.calculateSum();       <br>
+  
+  console.log(sum1);        <br>
+  console.log(sum2);             <br>
+  console.log(sum3);       <br>
+  
+</p>
+
+
+<h3>
+    ANS3.
+    <br> 
+    15  <br>
+    60   <br>
+    42   <br>
+
+</h3>
+<br>
+<hr>
+
+
+<h4>
+    Q4.  Write a JavaScript function to retrieve all the names of object's own and inherited properties.
+</h4>
+
+
+<p>
+    function getAllPropertyNames(obj) {    <br>
+        var propertyNames = [];    <br>
+      
+        // Retrieve own property names    <br>
+        for (var prop in obj) {        <br>
+          if (obj.hasOwnProperty(prop)) {       <br>
+            propertyNames.push(prop);         <br>
+          }
+        }
+      
+        // Retrieve inherited property names       <br>
+        var prototype = Object.getPrototypeOf(obj);      <br>
+        if (prototype !== null) {           <br>
+          var inheritedPropertyNames = getAllPropertyNames(prototype);         <br>
+          propertyNames = propertyNames.concat(inheritedPropertyNames);      <br>
+        }
+      
+        return propertyNames;    <br>
+      }
+      
+      // Example usage
+      var obj = {        <br>
+        name: "John",  <br>
+        age: 30           <br>
+      };
+      
+      function Person() {       <br>
+        this.gender = "Male";       <br>
+      }
+      Person.prototype = obj;        <br>
+      
+      var person = new Person();       <br>
+      person.city = "New York";        <br>
+      
+      var propertyNames = getAllPropertyNames(person);        <br>
+      console.log(propertyNames);         <br>
+      
+</p>
+
+
+<h3> 
+    ANS4.  [ 'gender', 'city', 'name', 'age' ]
+</h3>
+
+
+<br>
+<hr>
+    <script src="./index.js"></script>
+</body>
+</html>
