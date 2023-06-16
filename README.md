@@ -1,0 +1,2 @@
+# inherit
+inherit and prototypes
